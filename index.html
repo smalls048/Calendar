@@ -72,6 +72,7 @@
         .search-item { padding: 10px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.2s; line-height: 1.4; }
         .search-item:last-child { border-bottom: none; }
         .search-item:hover { background-color: var(--bg-color); }
+        .search-item strong { color: var(--primary); }
 
         .menu-container { position: relative; }
         .icon-btn { background: none; border: none; color: var(--text-color); font-size: 1.25rem; cursor: pointer; padding: 8px; border-radius: 50%; transition: background 0.2s; }
@@ -153,15 +154,14 @@
         /* Shared Event Box */
         .event { font-size: 0.75rem; padding: 4px 6px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; margin-bottom: 2px; cursor: grab; transition: opacity 0.2s; position: relative; }
         .event:active { cursor: grabbing; opacity: 0.6; }
-        .event.no-drag { cursor: context-menu; }
-
-        /* Right-Click Context Menu */
+        
+        /* Context Menu */
         .context-menu { position: fixed; background: var(--container-bg); border: 1px solid var(--border-color); border-radius: 6px; box-shadow: var(--shadow); z-index: 9999; display: none; min-width: 140px; overflow: hidden; padding: 5px 0;}
         .context-menu button { background: none; border: none; width: 100%; text-align: left; padding: 10px 15px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--text-color); cursor: pointer; display: flex; gap: 10px; align-items: center; transition: background 0.2s;}
         .context-menu button:hover { background-color: var(--bg-color); }
 
         /* Agenda View */
-        .agenda-wrapper { flex: 1; overflow-y: auto; padding: 10px; }
+        .agenda-wrapper { flex: 1; overflow-y: auto; padding: 10px; min-height: 0;}
         .agenda-day-group { margin-bottom: 25px; }
         .agenda-date-header { font-weight: 700; color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
         .agenda-event-row { display: flex; align-items: center; padding: 12px; background: var(--bg-color); border-radius: 8px; margin-bottom: 8px; border-left: 5px solid; cursor: pointer; transition: transform 0.2s; }
@@ -185,40 +185,33 @@
         .month-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow); }
         .month-card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
 
-        /* --- PERFECT TIME-BLOCKED GRID (Day & Week View) --- */
+        /* --- TIME-BLOCKED GRID --- */
         .time-grid-wrapper { display: flex; flex-direction: column; flex: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: var(--container-bg); scroll-behavior: smooth; min-height: 0;}
-        .time-grid-header { display: flex; border-bottom: 1px solid var(--border-color); background: var(--bg-color); position: sticky; top: 0; z-index: 20; min-height: 40px;}
+        .time-grid-header { display: flex; border-bottom: 1px solid var(--border-color); background: var(--bg-color); position: sticky; top: 0; z-index: 20; min-height: 40px; flex-shrink: 0;}
         .time-grid-time-label-spacer { width: 60px; flex-shrink: 0; border-right: 1px solid var(--border-color); }
         .time-grid-day-header { flex: 1; padding: 10px; text-align: center; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 4px;}
         .time-grid-day-header:last-child { border-right: none; }
-        .time-grid-header-date { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
         
-        .time-grid-body { display: flex; position: relative; /* Height calculated via JS for Working Hours */ } 
-        
-        /* Time Labels perfectly aligned */
+        .time-grid-body { display: flex; position: relative; } /* Height dynamically set via JS */
         .time-grid-times { position: relative; width: 60px; flex-shrink: 0; border-right: 1px solid var(--border-color); background: var(--bg-color); }
         .time-grid-time-slot { position: absolute; right: 8px; font-size: 0.75rem; color: var(--text-color); opacity: 0.7; font-weight: 500; line-height: 1; transform: translateY(-50%); margin: 0; padding: 0; white-space: nowrap;}
         
-        /* Col needs 100% height to ensure lines draw to the very bottom */
-        .time-grid-day-col { flex: 1; position: relative; border-right: 1px solid var(--border-color); background: var(--container-bg); box-sizing: border-box; cursor: text; height: 100%; min-height: 100%;}
+        .time-grid-day-col { flex: 1; position: relative; border-right: 1px solid var(--border-color); background: var(--container-bg); cursor: text; height: 100%; min-height: 100%;}
         .time-grid-day-col:last-child { border-right: none; }
         .time-grid-day-col.drag-over { background-color: var(--bg-color); }
-        .time-grid-day-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px); background-size: 100% 60px; pointer-events: none; z-index: 1; height: 100%; }
+        .time-grid-day-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px); background-size: 100% 60px; pointer-events: none; z-index: 1; }
         
+        .current-time-line { position: absolute; left: 0; right: 0; height: 2px; background-color: #ef4444; z-index: 15; pointer-events: none; }
+        .current-time-line::before { content: ''; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background-color: #ef4444; }
+
         .time-block-event { position: absolute; border-radius: 6px; padding: 4px 6px; font-size: 0.75rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border-left: 4px solid rgba(0,0,0,0.25); cursor: grab; transition: filter 0.2s, z-index 0.2s; box-sizing: border-box; z-index: 5; display: flex; flex-direction: column; line-height: 1.2; }
         .time-block-event:hover { filter: brightness(1.05); z-index: 10 !important; }
         .time-block-event:active { cursor: grabbing; opacity: 0.8; }
-        .time-block-event.no-drag { cursor: context-menu; }
         .time-block-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;}
         .time-block-time { font-size: 0.65rem; opacity: 0.9; white-space: nowrap;}
         
-        /* Drag Handle */
         .resize-handle { position: absolute; bottom: 0; left: 0; right: 0; height: 8px; cursor: ns-resize; background: linear-gradient(transparent, rgba(0,0,0,0.15)); z-index: 10; opacity: 0; transition: opacity 0.2s; }
         .time-block-event:hover .resize-handle { opacity: 1; }
-
-        /* Current Time Line */
-        .current-time-line { position: absolute; left: 0; right: 0; height: 2px; background-color: #ef4444; z-index: 15; pointer-events: none; }
-        .current-time-line::before { content: ''; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background-color: #ef4444; }
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
@@ -241,12 +234,9 @@
         .cancel-btn:hover { background-color: var(--danger-hover); }
         .action-btn { background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-color); }
         .action-btn:hover { background-color: var(--border-color); }
-        
-        .event-list-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 0.85rem; border-left: 4px solid; }
-        .delete-btn { background: var(--danger); color: white; border: none; border-radius: 4px; padding: 6px; cursor: pointer; }
-        .recurring-icon { font-size: 0.7rem; margin-right: 4px; opacity: 0.8; }
 
         .settings-section { margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        .settings-section:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
         .settings-section h4 { margin: 0 0 15px 0; color: var(--primary); font-size: 1rem; }
         .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
         .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -269,6 +259,8 @@
             .action-grid { grid-template-columns: 1fr; }
             .time-grid-time-label-spacer, .time-grid-times { width: 45px; }
             .time-grid-day-header { padding: 8px 4px; font-size: 0.8rem; }
+            .agenda-event-row { flex-direction: column; align-items: flex-start; }
+            .agenda-time { width: auto; margin-bottom: 5px; }
         }
     </style>
 </head>
@@ -408,7 +400,7 @@
                 <button class="primary-btn" onclick="saveEvent()">Save Event</button>
                 <button class="cancel-btn" onclick="closeModal('event-modal')">Cancel</button>
             </div>
-            <div id="event-list" style="margin-top: 20px; display:none;"></div>
+            <div id="event-list" style="margin-top: 20px;"></div>
         </div>
     </div>
 
@@ -485,21 +477,18 @@
             calendarColors[key] = typeof rawCalendarColors[key] === 'string' ? { color: rawCalendarColors[key], isAuto: false } : rawCalendarColors[key]; 
         }
 
-        let appSettings = JSON.parse(localStorage.getItem('appSettings')) || { 
-            enforceColors: false, theme: 'system', 
-            workingHours: { active: false, start: 6, end: 22 } 
-        };
-        // Backwards compatibility for settings
-        if(appSettings.workingHours === undefined) appSettings.workingHours = { active: false, start: 6, end: 22 };
+        // Bulletproof Settings Initialization
+        let appSettings = JSON.parse(localStorage.getItem('appSettings')) || {};
+        if (typeof appSettings.enforceColors === 'undefined') appSettings.enforceColors = false;
+        if (typeof appSettings.theme === 'undefined') appSettings.theme = 'system';
+        if (typeof appSettings.workingHours === 'undefined') appSettings.workingHours = { active: false, start: 6, end: 22 };
 
         let activeCalendarView = 'All';
         let currentView = 'month'; 
         let selectedDateString = '';
         
-        // Context Menu State
         let ctxTarget = null;
         
-        // Pomodoro State
         let pomoTime = 30 * 60; 
         let pomoInterval = null;
         let pomoRunning = false;
@@ -553,9 +542,9 @@
 
         function toggleMenu() { dropdownMenu.classList.toggle('show'); }
         window.onclick = function(e) { 
-            if (!e.target.closest('.menu-container')) dropdownMenu.classList.remove('show'); 
-            if (!e.target.closest('.search-container')) searchResults.style.display = 'none';
-            if (!e.target.closest('.context-menu')) contextMenu.style.display = 'none';
+            if (dropdownMenu && e.target.closest && !e.target.closest('.menu-container')) dropdownMenu.classList.remove('show'); 
+            if (searchResults && e.target.closest && !e.target.closest('.search-container')) searchResults.style.display = 'none';
+            if (contextMenu && e.target.closest && !e.target.closest('.context-menu')) contextMenu.style.display = 'none';
         }
 
         // --- Keyboard Shortcuts ---
@@ -765,6 +754,8 @@
             saveSettingsSilently(); closeModal('settings-modal'); 
         }
 
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+
         // --- Filters & Categories ---
         function renderFilters() {
             filterContainer.innerHTML = '';
@@ -823,13 +814,8 @@
             else if (currentView === 'year') currentDate.setFullYear(currentDate.getFullYear() + dir);
             else if (currentView === 'day') currentDate.setDate(currentDate.getDate() + dir);
             else if (currentView === 'week') currentDate.setDate(currentDate.getDate() + (dir * 7));
-            else if (currentView === 'agenda') currentDate.setMonth(currentDate.getMonth() + dir); // Jump by month in agenda
+            else if (currentView === 'agenda') currentDate.setMonth(currentDate.getMonth() + dir); 
             renderCalendar();
-        }
-        
-        function jumpToToday() {
-            currentDate = new Date();
-            if(currentView === 'year') setView('month'); else renderCalendar();
         }
 
         function buildHeaderSelectors() {
@@ -845,7 +831,7 @@
                 dl.innerText = `${monthNames[startOfWeek.getMonth()].substring(0,3)} ${startOfWeek.getDate()} - ${monthNames[endOfWeek.getMonth()].substring(0,3)} ${endOfWeek.getDate()},`;
                 dynamicSelectors.appendChild(dl);
             } else if (currentView === 'agenda') {
-                const dl = document.createElement('span'); dl.className = 'day-label'; dl.innerText = `Agenda starting ${monthNames[m].substring(0,3)} ${d},`; dynamicSelectors.appendChild(dl); 
+                const dl = document.createElement('span'); dl.className = 'day-label'; dl.innerText = `Agenda from ${monthNames[m].substring(0,3)} ${d},`; dynamicSelectors.appendChild(dl); 
             }
 
             if (currentView !== 'year') {
@@ -858,19 +844,17 @@
             dynamicSelectors.appendChild(yInput);
         }
 
-        // --- Context Menu ---
+        // --- Context Menu Logic ---
         function showContextMenu(e, dateStr, evtData) {
             e.preventDefault(); e.stopPropagation();
             ctxTarget = { dateStr, evtData };
             contextMenu.style.display = 'block';
             
-            // Boundary detection
             let x = e.pageX; let y = e.pageY;
             if(x + 150 > window.innerWidth) x -= 150;
             if(y + 120 > window.innerHeight) y -= 120;
             
-            contextMenu.style.left = x + 'px';
-            contextMenu.style.top = y + 'px';
+            contextMenu.style.left = x + 'px'; contextMenu.style.top = y + 'px';
         }
 
         function ctxAction(action) {
@@ -879,11 +863,10 @@
             contextMenu.style.display = 'none';
             
             if(action === 'edit') {
-                openModal(dateStr); // Will open the list, user can click to edit. Actually for quick edit, could auto open fields but modal lists them cleanly anyway.
+                openModal(dateStr); 
             } else if (action === 'delete') {
                 const isRec = evtData.isRecurring;
-                const ident = isRec ? evtData.id : evtData.id;
-                deleteEvent(dateStr, ident, isRec, evtData.originalStartDate);
+                deleteEvent(dateStr, evtData.id, isRec, evtData.originalStartDate);
             } else if (action === 'duplicate') {
                 if(evtData.isRecurring) { alert("Cannot easily duplicate a recurring series here. Try duplicating a regular event."); return; }
                 const realEvents = events[evtData.originalStartDate];
@@ -918,12 +901,14 @@
                 if (re.exceptions && re.exceptions.includes(dateStr)) return; 
                 const startObj = new Date(re.startDate + 'T00:00:00');
                 if (dObj < startObj) return; 
+
                 let matches = false;
                 if (re.recurrence === 'daily') matches = true;
                 else if (re.recurrence === 'weekdays') matches = (dayOfWeek >= 1 && dayOfWeek <= 5);
                 else if (re.recurrence === 'weekly') matches = dayOfWeek === startObj.getDay();
                 else if (re.recurrence === 'monthly') matches = dObj.getDate() === startObj.getDate();
                 else if (re.recurrence === 'yearly') matches = (dObj.getMonth() === startObj.getMonth() && dObj.getDate() === startObj.getDate());
+
                 if (matches) dayEvents.push({ ...re, isRecurring: true });
             });
 
@@ -938,11 +923,10 @@
 
         // --- Drag & Drop & Resize ---
         function setupDragAndDrop(evtDiv, evtData, dateStr) {
+            evtDiv.oncontextmenu = (e) => { showContextMenu(e, dateStr, evtData); };
             if (evtData.isRecurring) { evtDiv.classList.add('no-drag'); return; }
             evtDiv.setAttribute('draggable', 'true');
             evtDiv.ondragstart = (e) => { e.stopPropagation(); e.dataTransfer.setData('application/json', JSON.stringify({ type: 'event', id: evtData.id, originalStartDate: evtData.originalStartDate })); };
-            // Add right click
-            evtDiv.oncontextmenu = (e) => { showContextMenu(e, dateStr, evtData); };
         }
 
         function setupCellDropZone(cell, targetDateStr) {
@@ -1040,9 +1024,7 @@
 
         function renderAgendaView() {
             const wrapper = document.createElement('div'); wrapper.className = 'agenda-wrapper';
-            
-            const startDay = new Date(currentDate);
-            let addedCount = 0;
+            const startDay = new Date(currentDate); let addedCount = 0;
 
             for(let i=0; i<30; i++) {
                 const iterDate = new Date(startDay); iterDate.setDate(startDay.getDate() + i);
@@ -1062,9 +1044,9 @@
                         
                         const timeHTML = `<div class="agenda-time">${evt.time ? evt.time + (evt.endTime ? ' - '+evt.endTime : '') : 'All Day'}</div>`;
                         let details = '';
-                        if(evt.calendar) details += `<span><i class="fas fa-folder"></i> ${evt.calendar}</span>`;
-                        if(evt.location) details += `<span><i class="fas fa-map-marker-alt"></i> ${evt.location}</span>`;
-                        if(evt.isRecurring) details += `<span><i class="fas fa-redo"></i> Repeated</span>`;
+                        if(evt.calendar) details += `<span style="display:inline-block;"><i class="fas fa-folder"></i> ${evt.calendar}</span>`;
+                        if(evt.location) details += `<span style="display:inline-block;"><i class="fas fa-map-marker-alt"></i> ${evt.location}</span>`;
+                        if(evt.isRecurring) details += `<span style="display:inline-block;"><i class="fas fa-redo"></i> Repeated</span>`;
 
                         row.innerHTML = `
                             ${timeHTML}
@@ -1074,15 +1056,14 @@
                             </div>
                         `;
                         row.onclick = () => openModal(dateStr);
+                        row.oncontextmenu = (e) => showContextMenu(e, dateStr, evt);
                         group.appendChild(row);
                     });
                     wrapper.appendChild(group);
                 }
             }
 
-            if(addedCount === 0) {
-                wrapper.innerHTML = `<div style="text-align:center; padding: 40px; opacity:0.6;">No events scheduled for the next 30 days.</div>`;
-            }
+            if(addedCount === 0) wrapper.innerHTML = `<div style="text-align:center; padding: 40px; opacity:0.6;">No events scheduled for the next 30 days.</div>`;
             viewArea.appendChild(wrapper);
         }
 
@@ -1129,7 +1110,6 @@
         function renderTimeGrid(mode) {
             let daysArray = []; const today = new Date();
             
-            // Working Hours Logic
             const useWH = appSettings.workingHours.active;
             const startH = useWH ? appSettings.workingHours.start : 0;
             const endH = useWH ? appSettings.workingHours.end : 24;
@@ -1174,7 +1154,7 @@
 
             const timesCol = document.createElement('div'); timesCol.className = 'time-grid-times';
             for(let i=startH+1; i<=endH; i++) { 
-                if(i===24) continue; // Don't draw 24:00 label inside
+                if(i===24) continue; 
                 const t = document.createElement('div'); t.className = 'time-grid-time-slot';
                 t.style.top = ((i - startH) * PIXELS_PER_HOUR) + 'px';
                 t.innerText = i === 12 ? '12 PM' : i > 12 ? (i-12)+' PM' : i+' AM';
@@ -1211,17 +1191,13 @@
                     let eH = sH + 1, eM = sM; 
                     if (evt.endTime) { const [ehh, emm] = evt.endTime.split(':').map(Number); eH = ehh; eM = emm; }
                     
-                    // If event completely outside working hours, skip render
-                    if(eH <= startH || sH >= endH) return;
+                    if(eH <= startH || sH >= endH) return; // Skip if outside working hours
 
                     const block = document.createElement('div'); block.className = 'time-block-event';
                     block.style.backgroundColor = evt.displayColor; block.style.color = getContrastYIQ(evt.displayColor);
                     
-                    // Math adjustments for working hours cutoffs
-                    let renderStartH = sH + (sM/60);
-                    let renderEndH = eH + (eM/60);
+                    let renderStartH = sH + (sM/60); let renderEndH = eH + (eM/60);
                     
-                    // Visual clamping
                     if(renderStartH < startH) { renderStartH = startH; block.style.borderTop = "2px dashed rgba(0,0,0,0.5)"; }
                     if(renderEndH > endH) { renderEndH = endH; block.style.borderBottom = "2px dashed rgba(0,0,0,0.5)"; }
                     
@@ -1270,6 +1246,118 @@
                 line.style.top = `${(now.getHours() + (now.getMinutes() / 60) - startH) * PIXELS_PER_HOUR}px`;
             }
         }
+
+        // --- Modals & Event Logic ---
+        function openModal(dateStr, prefillTime = null) {
+            selectedDateString = dateStr;
+            const dObj = new Date(dateStr + 'T00:00:00');
+            document.getElementById('modal-date-display').innerText = dObj.toLocaleDateString('default', { weekday: 'short', month: 'short', day: 'numeric' });
+            
+            eventTitleInput.value = ''; eventTimeInput.value = prefillTime || ''; eventEndTimeInput.value = ''; eventEndDateInput.value = ''; 
+            eventLocationInput.value = ''; eventDescInput.value = ''; eventReminderInput.checked = false; eventRecurrenceSelect.value = 'none';
+            
+            if(activeCalendarView !== 'All' && calendars.includes(activeCalendarView)) eventCalendarSelect.value = activeCalendarView;
+            else if(calendars.length > 0) eventCalendarSelect.value = calendars[0];
+
+            const listContainer = document.getElementById('event-list'); listContainer.innerHTML = '';
+            const dayEvents = getEventsForDate(dateStr);
+            
+            if(dayEvents.length > 0) {
+                dayEvents.forEach((evt, index) => {
+                    const isRecurring = evt.isRecurring;
+                    const identifier = isRecurring ? `'${evt.id}', true` : `'${evt.id}', false, '${evt.originalStartDate}'`;
+                    let extraInfo = '';
+                    if (evt.location) extraInfo += `<div>📍 ${evt.location}</div>`;
+                    if (evt.description) extraInfo += `<div>📝 ${evt.description}</div>`;
+                    if (evt.endTime) extraInfo += `<div>⏱ Ends at: ${evt.endTime}</div>`;
+                    if (evt.endDate) extraInfo += `<div>⏳ Ends on: ${evt.endDate}</div>`;
+
+                    listContainer.innerHTML += `
+                        <div class="event-list-item" style="border-left-color: ${evt.displayColor}; align-items: flex-start;">
+                            <div style="flex: 1;">
+                                ${isRecurring ? '<i class="fas fa-redo recurring-icon"></i> ' : ''}
+                                <strong>${evt.time || 'All day'}</strong> - ${evt.title} 
+                                <div style="font-size:0.75rem;color:gray; margin-top: 4px;">[${evt.calendar || 'Uncategorized'}]</div>
+                                ${extraInfo ? `<div style="font-size:0.75rem; margin-top: 5px; opacity: 0.85;">${extraInfo}</div>` : ''}
+                            </div>
+                            <button class="delete-btn" onclick="deleteEvent('${dateStr}', ${identifier})" title="Delete Instance"><i class="fas fa-trash"></i></button>
+                        </div>`;
+                });
+            }
+            eventModal.style.display = 'flex';
+            setTimeout(() => eventTitleInput.focus(), 50); // Small delay to ensure focus registers
+        }
+
+        function saveEvent() {
+            const title = eventTitleInput.value.trim(); const time = eventTimeInput.value;
+            let endTime = eventEndTimeInput.value; let endDate = eventEndDateInput.value;
+            const location = eventLocationInput.value.trim(); const description = eventDescInput.value.trim();
+            const calendar = eventCalendarSelect.value; const color = eventColorInput.value; 
+            const reminder = eventReminderInput.checked; const recurrence = eventRecurrenceSelect.value;
+
+            if (!title) return alert('Please enter an event title.');
+            
+            if (endDate) {
+                const sDate = new Date(selectedDateString + 'T00:00:00'); const eDate = new Date(endDate + 'T00:00:00');
+                if (eDate < sDate) return alert("End Date cannot be before Start Date.");
+                if (endDate === selectedDateString) endDate = ""; 
+            }
+            
+            if (time && !endTime) {
+                let [h, m] = time.split(':').map(Number); h = (h + 1) % 24;
+                endTime = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+            }
+
+            if (time && recurrence === 'none' && !endDate) {
+                const existing = getEventsForDate(selectedDateString).filter(e => e.time && e.time === time);
+                if(existing.length > 0) {
+                    if(!confirm(`You already have an event at ${time} ("${existing[0].title}"). Save anyway?`)) return;
+                }
+            }
+
+            const newEvent = { id: 'evt_' + Date.now(), title, time, endTime, endDate, location, description, calendar, color, reminder };
+
+            if (recurrence !== 'none') { recurringEvents.push({ ...newEvent, recurrence, startDate: selectedDateString, exceptions: [] }); } 
+            else { if (!events[selectedDateString]) events[selectedDateString] = []; events[selectedDateString].push(newEvent); }
+            saveToLocalStorage(); closeModal('event-modal'); renderCalendar();
+        }
+
+        function deleteEvent(dateStr, id, isRecurring, originalStartDate) {
+            if (isRecurring) {
+                const recIndex = recurringEvents.findIndex(r => r.id === id);
+                if (recIndex > -1) {
+                    if(confirm("Delete this instance or the entire series?\n\nOK = Delete only this instance\nCancel = Delete the whole series")) {
+                        recurringEvents[recIndex].exceptions.push(dateStr); 
+                    } else { recurringEvents.splice(recIndex, 1); }
+                }
+            } else {
+                const realEvents = events[originalStartDate] || [];
+                const rawIndex = realEvents.findIndex(e => e.id === id);
+                if (rawIndex > -1) { realEvents.splice(rawIndex, 1); if(realEvents.length === 0) delete events[originalStartDate]; }
+            }
+            saveToLocalStorage(); openModal(dateStr); renderCalendar();
+        }
+
+        function getContrastYIQ(hex){
+            if (!hex) return 'black';
+            if (hex.startsWith('var(')) return 'white';
+            hex = hex.replace("#", ""); if(hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+            const r = parseInt(hex.substr(0,2),16), g = parseInt(hex.substr(2,2),16), b = parseInt(hex.substr(4,2),16);
+            if(isNaN(r)||isNaN(g)||isNaN(b)) return 'white';
+            return (((r*299)+(g*587)+(b*114))/1000 >= 128) ? 'black' : 'white';
+        }
+
+        // --- Data Management (Backup, Restore, ICS) ---
+        function backupData() { const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({events, recurringEvents, calendars, calendarColors, appSettings, todos})); const a = document.createElement('a'); a.href = dataStr; a.download = "calendar_backup.json"; document.body.appendChild(a); a.click(); a.remove(); closeModal('settings-modal'); }
+        function restoreData(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(evt) { try { const parsed = JSON.parse(evt.target.result); if(parsed.events) { events = parsed.events; recurringEvents = parsed.recurringEvents || []; calendars = parsed.calendars || ['Personal']; calendarColors = parsed.calendarColors || {}; appSettings = parsed.appSettings || { enforceColors: false, theme: 'system' }; if(appSettings.workingHours===undefined) appSettings.workingHours = {active:false,start:6,end:22}; todos = parsed.todos || []; for (let key in calendarColors) { if (typeof calendarColors[key] === 'string') { calendarColors[key] = { color: calendarColors[key], isAuto: false }; } } } else { events = parsed; } Object.values(events).forEach(dayArr => dayArr.forEach(ev => { if(!ev.id) ev.id = 'evt_' + Math.random().toString(36).substr(2, 9); })); localStorage.setItem('calendarCategories', JSON.stringify(calendars)); localStorage.setItem('calendarColors', JSON.stringify(calendarColors)); localStorage.setItem('appSettings', JSON.stringify(appSettings)); localStorage.setItem('calendarTodos', JSON.stringify(todos)); saveToLocalStorage(); applyTheme(appSettings.theme); renderFilters(); renderCalendar(); renderTodos(); alert("Data restored!"); } catch (error) { alert("Error parsing file."); } }; reader.readAsText(file); closeModal('settings-modal'); }
+        function exportICS() { let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Smart Calendar App//EN\n"; for (const [dateStr, dayEvents] of Object.entries(events)) { dayEvents.forEach(evt => { ics += "BEGIN:VEVENT\n"; ics += `UID:${evt.id}@smartcalendar\n`; ics += `DTSTART:${formatDateForICS(dateStr, evt.time)}\n`; if(evt.endDate || evt.endTime) { const endD = evt.endDate || dateStr; const endT = evt.endTime || evt.time; ics += `DTEND:${formatDateForICS(endD, endT)}\n`; } ics += `SUMMARY:${evt.title}\n`; if(evt.description) ics += `DESCRIPTION:${evt.description}\n`; if(evt.location) ics += `LOCATION:${evt.location}\n`; ics += "END:VEVENT\n"; }); } recurringEvents.forEach(evt => { ics += "BEGIN:VEVENT\n"; ics += `UID:${evt.id}@smartcalendar\n`; ics += `DTSTART:${formatDateForICS(evt.startDate, evt.time)}\n`; let freq = 'DAILY'; if(evt.recurrence === 'weekly') freq = 'WEEKLY'; if(evt.recurrence === 'monthly') freq = 'MONTHLY'; if(evt.recurrence === 'yearly') freq = 'YEARLY'; if(evt.recurrence === 'weekdays') { freq = 'WEEKLY'; ics += `RRULE:FREQ=${freq};BYDAY=MO,TU,WE,TH,FR\n`; } else { ics += `RRULE:FREQ=${freq}\n`; } ics += `SUMMARY:${evt.title}\n`; if(evt.description) ics += `DESCRIPTION:${evt.description}\n`; if(evt.location) ics += `LOCATION:${evt.location}\n`; ics += "END:VEVENT\n"; }); ics += "END:VCALENDAR"; const a = document.createElement('a'); a.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics); a.download = "calendar_export.ics"; document.body.appendChild(a); a.click(); a.remove(); closeModal('settings-modal'); }
+        function importICS(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(evt) { const lines = evt.target.result.split(/\r?\n/); let currentEvent = null; let importedCount = 0; let calName = "Imported Calendar"; lines.forEach(line => { if(line.startsWith("X-WR-CALNAME:")) calName = line.substring(13).trim(); }); if(!calendars.includes(calName)) { calendars.push(calName); calendarColors[calName] = { color: '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'), isAuto: false }; } lines.forEach(line => { if(line.startsWith("BEGIN:VEVENT")) currentEvent = { id: 'evt_' + Date.now() + Math.random().toString(36).substr(2, 5), calendar: calName }; else if(line.startsWith("END:VEVENT") && currentEvent && currentEvent.startDate) { if(!events[currentEvent.startDate]) events[currentEvent.startDate] = []; events[currentEvent.startDate].push(currentEvent); importedCount++; currentEvent = null; } else if(currentEvent) { if(line.startsWith("SUMMARY:")) currentEvent.title = line.substring(8); else if(line.startsWith("DESCRIPTION:")) currentEvent.description = line.substring(12); else if(line.startsWith("LOCATION:")) currentEvent.location = line.substring(9); else if(line.startsWith("DTSTART")) { const val = line.split(':')[1]; if(val && val.length >= 8) { currentEvent.startDate = `${val.substring(0,4)}-${val.substring(4,6)}-${val.substring(6,8)}`; if(val.includes('T')) { const tIndex = val.indexOf('T'); currentEvent.time = `${val.substring(tIndex+1, tIndex+3)}:${val.substring(tIndex+3, tIndex+5)}`; } } } else if(line.startsWith("DTEND")) { const val = line.split(':')[1]; if(val && val.length >= 8 && val.includes('T')) { const tIndex = val.indexOf('T'); currentEvent.endTime = `${val.substring(tIndex+1, tIndex+3)}:${val.substring(tIndex+3, tIndex+5)}`; } } } }); appSettings.enforceColors = true; saveToLocalStorage(); openSettings(); renderCalendar(); alert(`Imported ${importedCount} events! Check the Settings menu to adjust the color for "${calName}".`); }; reader.readAsText(file); }
+        function formatDateForICS(dateStr, timeStr) { const date = dateStr.replace(/-/g, ''); if(!timeStr) return date; const time = timeStr.replace(':', '') + '00'; return `${date}T${time}`; }
+        
+        async function exportImage() { toggleMenu(); const container = document.getElementById('calendar-container'); const canvas = await html2canvas(container, { scale: 2, backgroundColor: getComputedStyle(document.body).getPropertyValue('--container-bg') }); const link = document.createElement('a'); link.download = 'calendar.png'; link.href = canvas.toDataURL('image/png'); link.click(); }
+        async function exportPDF() { toggleMenu(); const container = document.getElementById('calendar-container'); const canvas = await html2canvas(container, { scale: 2, backgroundColor: getComputedStyle(document.body).getPropertyValue('--container-bg') }); const imgData = canvas.toDataURL('image/png'); const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [canvas.width, canvas.height] }); pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height); pdf.save("calendar.pdf"); }
+        function requestNotificationPermission() { toggleMenu(); if (!("Notification" in window)) alert("Browser does not support notifications"); else if (Notification.permission === "granted") alert("Reminders already enabled!"); else if (Notification.permission !== "denied") Notification.requestPermission().then(p => { if (p === "granted") new Notification("Reminders enabled!"); }); }
+        function startReminderService() { setInterval(() => { const now = new Date(); const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`; const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`; const dayEvents = getEventsForDate(dateStr); dayEvents.forEach(evt => { if (evt.reminder && evt.time === timeStr) { if (Notification.permission === "granted") new Notification("Calendar Reminder", { body: evt.title }); else alert(`Reminder: ${evt.title}`); } }); }, 60000); }
 
         init();
     </script>
