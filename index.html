@@ -19,7 +19,7 @@
             --nav-bg: #ffffff; --today-bg: #e0e7ff; --today-border: #4f46e5;
             --danger: #ef4444; --danger-hover: #dc2626;
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --pill-hover: #e5e7eb; --grid-line: rgba(0,0,0,0.05);
+            --pill-hover: #e5e7eb; --grid-line: rgba(0,0,0,0.08);
         }
 
         [data-theme="dark"] {
@@ -27,35 +27,35 @@
             --border-color: #374151; --primary: #818cf8; --primary-hover: #6366f1;
             --nav-bg: #1f2937; --today-bg: #312e81; --today-border: #818cf8;
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); --pill-hover: #374151;
-            --grid-line: rgba(255,255,255,0.05);
+            --grid-line: rgba(255,255,255,0.08);
         }
 
         [data-theme="ocean"] {
             --bg-color: #e0f2fe; --text-color: #082f49; --container-bg: #ffffff;
             --border-color: #bae6fd; --primary: #0284c7; --primary-hover: #0369a1;
             --nav-bg: #f0f9ff; --today-bg: #e0f2fe; --today-border: #0284c7;
-            --shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.15); --pill-hover: #bae6fd; --grid-line: rgba(2,132,199,0.1);
+            --shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.15); --pill-hover: #bae6fd; --grid-line: rgba(2,132,199,0.15);
         }
 
         [data-theme="midnight"] {
             --bg-color: #020617; --text-color: #f8fafc; --container-bg: #0f172a;
             --border-color: #1e293b; --primary: #06b6d4; --primary-hover: #0891b2;
             --nav-bg: #020617; --today-bg: #164e63; --today-border: #06b6d4;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.7); --pill-hover: #1e293b; --grid-line: rgba(255,255,255,0.05);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.7); --pill-hover: #1e293b; --grid-line: rgba(255,255,255,0.08);
         }
 
         [data-theme="sunset"] {
             --bg-color: #fdf4ff; --text-color: #4a044e; --container-bg: #ffffff;
             --border-color: #fbcfe8; --primary: #d946ef; --primary-hover: #c026d3;
             --nav-bg: #fdf2f8; --today-bg: #fae8ff; --today-border: #d946ef;
-            --shadow: 0 10px 15px -3px rgba(217, 70, 239, 0.15); --pill-hover: #fbcfe8; --grid-line: rgba(217,70,239,0.1);
+            --shadow: 0 10px 15px -3px rgba(217, 70, 239, 0.15); --pill-hover: #fbcfe8; --grid-line: rgba(217,70,239,0.15);
         }
 
         [data-theme="forest"] {
             --bg-color: #f0fdf4; --text-color: #14532d; --container-bg: #ffffff;
             --border-color: #bbf7d0; --primary: #16a34a; --primary-hover: #15803d;
             --nav-bg: #f0fdf4; --today-bg: #dcfce7; --today-border: #16a34a;
-            --shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.15); --pill-hover: #bbf7d0; --grid-line: rgba(22,163,74,0.1);
+            --shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.15); --pill-hover: #bbf7d0; --grid-line: rgba(22,163,74,0.15);
         }
 
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; transition: background-color 0.3s, color 0.3s; }
@@ -139,7 +139,7 @@
         .month-card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
         .month-card .event-count { font-size: 0.85rem; font-weight: 500; opacity: 0.7; }
 
-        /* --- TIME-BLOCKED GRID (Day & Week View) --- */
+        /* --- PERFECT TIME-BLOCKED GRID (Day & Week View) --- */
         .time-grid-wrapper { display: flex; flex-direction: column; height: 65vh; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: var(--container-bg); scroll-behavior: smooth;}
         .time-grid-header { display: flex; border-bottom: 1px solid var(--border-color); background: var(--bg-color); position: sticky; top: 0; z-index: 20; min-height: 40px;}
         .time-grid-time-label-spacer { width: 60px; flex-shrink: 0; border-right: 1px solid var(--border-color); }
@@ -147,22 +147,28 @@
         .time-grid-day-header:last-child { border-right: none; }
         .time-grid-header-date { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
         
-        .time-grid-body { display: flex; position: relative; height: 1440px; /* 24 hours * 60px per hour */ }
-        .time-grid-times { width: 60px; flex-shrink: 0; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); background: var(--bg-color); }
-        .time-grid-time-slot { height: 60px; padding-right: 8px; text-align: right; font-size: 0.75rem; color: var(--text-color); opacity: 0.7; box-sizing: border-box; border-bottom: 1px solid var(--border-color); position: relative; top: -10px; font-weight: 500; }
+        .time-grid-body { display: flex; position: relative; height: 1440px; /* 24h * 60px */ }
+        
+        /* Time Labels perfectly aligned */
+        .time-grid-times { position: relative; width: 60px; flex-shrink: 0; border-right: 1px solid var(--border-color); background: var(--bg-color); }
+        .time-grid-time-slot { 
+            position: absolute; right: 8px; font-size: 0.75rem; color: var(--text-color); 
+            opacity: 0.7; font-weight: 500; line-height: 1; 
+            transform: translateY(-50%); /* Anchors exact center of text to the grid line */
+            margin: 0; padding: 0; white-space: nowrap;
+        }
         
         .time-grid-day-col { flex: 1; position: relative; border-right: 1px solid var(--border-color); background: var(--container-bg); box-sizing: border-box; cursor: text; }
         .time-grid-day-col:last-child { border-right: none; }
         .time-grid-day-col.drag-over { background-color: var(--bg-color); }
         
-        /* Hourly horizontal lines */
+        /* Horizontal hourly lines */
         .time-grid-day-col::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background-image: linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
             background-size: 100% 60px; pointer-events: none; z-index: 1;
         }
         
-        /* Absolute Positioned Event Block */
         .time-block-event { 
             position: absolute; border-radius: 6px; padding: 4px 6px; font-size: 0.75rem; 
             overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.15); 
@@ -228,7 +234,6 @@
             .event { font-size: 0.65rem; padding: 2px 4px; }
             .action-grid { grid-template-columns: 1fr; }
             
-            /* Mobile adjustments for time grid */
             .time-grid-time-label-spacer, .time-grid-times { width: 45px; }
             .time-grid-day-header { padding: 8px 4px; font-size: 0.8rem; }
         }
@@ -366,7 +371,9 @@
                 <label class="checkbox-label" style="margin-top: 10px;">
                     <input type="checkbox" id="enforce-colors-check" onchange="toggleCategoryColorsVisibility()"> Enforce Category Colors
                 </label>
-                <div style="font-size: 0.75rem; color: gray; margin-top: -10px; margin-left: 22px; margin-bottom: 10px;">Overrides individual event colors. (Great for Imported ICS!)</div>
+                <div style="font-size: 0.75rem; color: gray; margin-top: -10px; margin-left: 22px; margin-bottom: 10px;">
+                    Check "Auto" next to a calendar to let its events keep their custom colors.
+                </div>
                 
                 <div id="category-colors-list"></div>
             </div>
@@ -390,17 +397,31 @@
 
     <script>
         // Constants
-        const PIXELS_PER_HOUR = 60; // Used for sizing events in grid views
+        const PIXELS_PER_HOUR = 60; 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // Data & State
+        // Data & State Initialization
         let currentDate = new Date();
         let events = JSON.parse(localStorage.getItem('calendarEvents')) || {}; 
         let recurringEvents = JSON.parse(localStorage.getItem('calendarRecurring')) || [];
         let calendars = JSON.parse(localStorage.getItem('calendarCategories')) || ['Personal', 'Work', 'Family'];
-        let calendarColors = JSON.parse(localStorage.getItem('calendarColors')) || { 'Personal': '#10b981', 'Work': '#3b82f6', 'Family': '#f59e0b' };
-        let appSettings = JSON.parse(localStorage.getItem('appSettings')) || { enforceColors: false, theme: 'light' };
         
+        // Upgrade legacy calendarColors to support the "Auto" feature
+        let rawCalendarColors = JSON.parse(localStorage.getItem('calendarColors')) || { 
+            'Personal': {color: '#10b981', isAuto: false}, 
+            'Work': {color: '#3b82f6', isAuto: false}, 
+            'Family': {color: '#f59e0b', isAuto: false} 
+        };
+        let calendarColors = {};
+        for (let key in rawCalendarColors) {
+            if (typeof rawCalendarColors[key] === 'string') {
+                calendarColors[key] = { color: rawCalendarColors[key], isAuto: false };
+            } else {
+                calendarColors[key] = rawCalendarColors[key];
+            }
+        }
+
+        let appSettings = JSON.parse(localStorage.getItem('appSettings')) || { enforceColors: false, theme: 'light' };
         let activeCalendarView = 'All';
         let currentView = 'month'; 
         let selectedDateString = '';
@@ -449,11 +470,9 @@
             if(themeName === 'light') document.body.removeAttribute('data-theme');
             else document.body.setAttribute('data-theme', themeName);
         }
-        
         function toggleTheme() { 
             appSettings.theme = appSettings.theme === 'dark' ? 'light' : 'dark';
-            saveSettingsSilently();
-            toggleMenu();
+            saveSettingsSilently(); toggleMenu();
         }
 
         // --- Search ---
@@ -494,20 +513,41 @@
             searchResults.style.display = 'block';
         }
 
-        // --- Settings ---
+        // --- Settings & UI Logic ---
         function toggleCategoryColorsVisibility() { categoryColorsList.style.display = enforceColorsCheck.checked ? 'block' : 'none'; }
+
+        // Triggered by the "Auto" checkbox to disable the color picker
+        function toggleCalColorInput(cal) {
+            const isAuto = document.getElementById(`auto-set-${cal}`).checked;
+            const colorInput = document.getElementById(`color-set-${cal}`);
+            if(isAuto) {
+                colorInput.disabled = true; colorInput.style.opacity = '0.3'; colorInput.style.cursor = 'not-allowed';
+            } else {
+                colorInput.disabled = false; colorInput.style.opacity = '1'; colorInput.style.cursor = 'pointer';
+            }
+        }
 
         function openSettings() {
             toggleMenu();
             enforceColorsCheck.checked = appSettings.enforceColors;
             appThemeSelect.value = appSettings.theme || 'light';
             categoryColorsList.innerHTML = '';
+            
             calendars.forEach(cal => {
                 const row = document.createElement('div'); row.className = 'settings-row';
-                const colorVal = calendarColors[cal] || '#4f46e5';
-                row.innerHTML = `<span>${cal}</span> <input type="color" id="color-set-${cal}" value="${colorVal}">`;
+                const colorObj = calendarColors[cal] || { color: '#4f46e5', isAuto: false };
+                
+                row.innerHTML = `
+                    <span style="flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:10px;" title="${cal}">${cal}</span> 
+                    <div style="display:flex; align-items:center; gap: 15px;">
+                        <label class="checkbox-label" style="margin-bottom:0!important; font-size:0.8rem;">
+                            <input type="checkbox" id="auto-set-${cal}" ${colorObj.isAuto ? 'checked' : ''} onchange="toggleCalColorInput('${cal}')"> Auto
+                        </label>
+                        <input type="color" id="color-set-${cal}" value="${colorObj.color}" ${colorObj.isAuto ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : ''}>
+                    </div>`;
                 categoryColorsList.appendChild(row);
             });
+            
             toggleCategoryColorsVisibility(); 
             settingsModal.style.display = 'flex';
         }
@@ -523,7 +563,10 @@
             appSettings.theme = appThemeSelect.value;
             calendars.forEach(cal => {
                 const input = document.getElementById(`color-set-${cal}`);
-                if(input) calendarColors[cal] = input.value;
+                const autoCheck = document.getElementById(`auto-set-${cal}`);
+                if(input && autoCheck) {
+                    calendarColors[cal] = { color: input.value, isAuto: autoCheck.checked };
+                }
             });
             saveSettingsSilently();
             closeModal('settings-modal'); 
@@ -556,7 +599,8 @@
         function addNewCalendar() {
             const newName = prompt("Enter new calendar name:");
             if(newName && newName.trim() !== "" && !calendars.includes(newName.trim())) {
-                const cleaned = newName.trim(); calendars.push(cleaned); calendarColors[cleaned] = '#4f46e5';
+                const cleaned = newName.trim(); calendars.push(cleaned); 
+                calendarColors[cleaned] = { color: '#4f46e5', isAuto: false };
                 localStorage.setItem('calendarCategories', JSON.stringify(calendars)); 
                 localStorage.setItem('calendarColors', JSON.stringify(calendarColors));
                 renderFilters();
@@ -648,9 +692,15 @@
             });
 
             dayEvents = dayEvents.filter(e => activeCalendarView === 'All' || e.calendar === activeCalendarView);
+            
+            // Smart Color Application (Handles the Auto Override)
             dayEvents.forEach(e => {
-                e.displayColor = e.color || 'var(--event-bg)';
-                if (appSettings.enforceColors && calendarColors[e.calendar]) e.displayColor = calendarColors[e.calendar];
+                const catColorObj = calendarColors[e.calendar];
+                if (appSettings.enforceColors && catColorObj && !catColorObj.isAuto) {
+                    e.displayColor = catColorObj.color;
+                } else {
+                    e.displayColor = e.color || 'var(--event-bg)';
+                }
             });
 
             dayEvents.sort((a, b) => (a.time || '24:00').localeCompare(b.time || '24:00'));
@@ -713,7 +763,6 @@
             else if (currentView === 'day' || currentView === 'week') renderTimeGrid(currentView);
         }
 
-        // Helper for basic event pills (Month view)
         function createEventElement(evt, dateStr) {
             const evtDiv = document.createElement('div'); evtDiv.className = 'event';
             evtDiv.style.backgroundColor = evt.displayColor; evtDiv.style.color = getContrastYIQ(evt.displayColor);
@@ -775,7 +824,7 @@
             viewArea.appendChild(grid);
         }
 
-        // --- NEW TIME-BLOCKED GRID LOGIC ---
+        // --- TIME-BLOCKED GRID LOGIC (Perfectly Aligned) ---
         function renderTimeGrid(mode) {
             let daysArray = [];
             const today = new Date();
@@ -794,7 +843,6 @@
 
             const wrapper = document.createElement('div'); wrapper.className = 'time-grid-wrapper';
             
-            // Header (Days + All Day Events)
             const header = document.createElement('div'); header.className = 'time-grid-header';
             header.innerHTML = '<div class="time-grid-time-label-spacer"></div>';
             
@@ -818,23 +866,22 @@
             });
             wrapper.appendChild(header);
 
-            // Body (Time labels + Day Columns)
             const body = document.createElement('div'); body.className = 'time-grid-body';
             
+            // Generate perfectly positioned absolute labels
             const timesCol = document.createElement('div'); timesCol.className = 'time-grid-times';
-            for(let i=0; i<24; i++) {
+            for(let i=1; i<24; i++) { // Starts at 1AM to prevent label overlapping the very top border
                 const t = document.createElement('div'); t.className = 'time-grid-time-slot';
-                t.innerText = i === 0 ? '12 AM' : i < 12 ? i+' AM' : i === 12 ? '12 PM' : (i-12)+' PM';
+                t.style.top = (i * PIXELS_PER_HOUR) + 'px';
+                t.innerText = i < 12 ? i+' AM' : i === 12 ? '12 PM' : (i-12)+' PM';
                 timesCol.appendChild(t);
             }
             body.appendChild(timesCol);
 
-            // Day Columns & Absolute Event Positioning
             daysArray.forEach(day => {
                 const col = document.createElement('div'); col.className = 'time-grid-day-col';
                 setupCellDropZone(col, day.dateStr);
 
-                // Click to add event at specific time
                 col.onclick = (e) => {
                     const rect = col.getBoundingClientRect();
                     const y = e.clientY - rect.top + wrapper.scrollTop;
@@ -844,9 +891,7 @@
 
                 const timedEvents = getEventsForDate(day.dateStr).filter(e => e.time);
                 
-                // Track overlaps to slightly shift events visually
-                let lastEndPx = 0;
-                let currentOverlapLevel = 0;
+                let lastEndPx = 0; let currentOverlapLevel = 0;
 
                 timedEvents.forEach(evt => {
                     const block = document.createElement('div'); block.className = 'time-block-event';
@@ -856,17 +901,16 @@
                     const [sH, sM] = evt.time.split(':').map(Number);
                     const topPx = (sH + (sM/60)) * PIXELS_PER_HOUR;
                     
-                    let eH = sH + 1, eM = sM; // Default 1 hour duration
+                    let eH = sH + 1, eM = sM; 
                     if (evt.endTime) {
                         const [ehh, emm] = evt.endTime.split(':').map(Number);
                         eH = ehh; eM = emm;
                     }
                     let durationHrs = (eH + (eM/60)) - (sH + (sM/60));
-                    if (durationHrs <= 0) durationHrs = 1; // Fallback if end time is before start time
+                    if (durationHrs <= 0) durationHrs = 1; 
                     
                     const heightPx = durationHrs * PIXELS_PER_HOUR;
 
-                    // Basic overlap handling
                     if (topPx < lastEndPx) { currentOverlapLevel++; } 
                     else { currentOverlapLevel = 0; }
                     lastEndPx = Math.max(lastEndPx, topPx + heightPx);
@@ -874,7 +918,6 @@
                     block.style.top = topPx + 'px';
                     block.style.height = heightPx + 'px';
                     
-                    // Indent overlapping blocks so they are all clickable
                     const indent = currentOverlapLevel * 8; 
                     block.style.left = (2 + indent) + '%';
                     block.style.width = (94 - indent) + '%';
@@ -898,8 +941,6 @@
             
             wrapper.appendChild(body);
             viewArea.appendChild(wrapper);
-
-            // Auto-scroll to roughly 8:00 AM on initial load
             setTimeout(() => { wrapper.scrollTop = 8 * PIXELS_PER_HOUR - 20; }, 10);
         }
 
@@ -963,7 +1004,6 @@
                 if (endDate === selectedDateString) endDate = ""; 
             }
             
-            // Auto default end time to +1 hour if not specified but start time exists
             if (time && !endTime) {
                 let [h, m] = time.split(':').map(Number);
                 h = (h + 1) % 24;
@@ -1028,6 +1068,10 @@
                         events = parsed.events; recurringEvents = parsed.recurringEvents || [];
                         calendars = parsed.calendars || ['Personal']; calendarColors = parsed.calendarColors || {};
                         appSettings = parsed.appSettings || { enforceColors: false, theme: 'light' };
+                        
+                        for (let key in calendarColors) {
+                            if (typeof calendarColors[key] === 'string') { calendarColors[key] = { color: calendarColors[key], isAuto: false }; }
+                        }
                     } else { events = parsed; } 
                     
                     Object.values(events).forEach(dayArr => dayArr.forEach(ev => { if(!ev.id) ev.id = 'evt_' + Math.random().toString(36).substr(2, 9); }));
@@ -1095,18 +1139,13 @@
                 let currentEvent = null; let importedCount = 0;
                 let calName = "Imported Calendar";
 
-                // Step 1: Check for ICS Calendar Name
-                lines.forEach(line => {
-                    if(line.startsWith("X-WR-CALNAME:")) calName = line.substring(13).trim();
-                });
+                lines.forEach(line => { if(line.startsWith("X-WR-CALNAME:")) calName = line.substring(13).trim(); });
 
-                // Add to our categories if it doesn't exist
                 if(!calendars.includes(calName)) {
                     calendars.push(calName);
-                    calendarColors[calName] = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'); // Random hex
+                    calendarColors[calName] = { color: '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'), isAuto: false };
                 }
 
-                // Step 2: Parse events
                 lines.forEach(line => {
                     if(line.startsWith("BEGIN:VEVENT")) currentEvent = { id: 'evt_' + Date.now() + Math.random().toString(36).substr(2, 5), calendar: calName };
                     else if(line.startsWith("END:VEVENT") && currentEvent && currentEvent.startDate) {
@@ -1138,11 +1177,9 @@
                     }
                 });
                 
-                // Force "Enforce Colors" on to make the import color mapping obvious to user
                 appSettings.enforceColors = true;
-                
                 saveToLocalStorage(); openSettings(); renderCalendar();
-                alert(`Successfully imported ${importedCount} events! Check the Settings menu to assign a custom color to "${calName}".`);
+                alert(`Successfully imported ${importedCount} events! Check the Settings menu to adjust the color for "${calName}".`);
             };
             reader.readAsText(file);
         }
